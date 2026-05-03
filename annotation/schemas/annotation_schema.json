@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "DensePhysicalMapAnnotation",
+  "type": "object",
+  "required": [
+    "sample_id",
+    "image_path",
+    "physical_properties"
+  ],
+  "properties": {
+    "sample_id": {
+      "type": "string"
+    },
+    "image_path": {
+      "type": "string"
+    },
+    "physical_properties": {
+      "type": "object",
+      "required": [
+        "albedo",
+        "roughness",
+        "metallic"
+      ],
+      "properties": {
+        "albedo": {
+          "type": "string"
+        },
+        "roughness": {
+          "type": "number"
+        },
+        "metallic": {
+          "type": "number"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "sample_id": "sample_0001",
+  "image_path": "data/samples/images/sample_0001.png",
+  "physical_properties": {
+    "albedo": "matte_paint",
+    "roughness": 0.42,
+    "metallic": 0.05
+  },
+  "metadata": {
+    "scene": "demo_scene",
+    "split": "demo",
+    "source": "public_example"
+  }
+}

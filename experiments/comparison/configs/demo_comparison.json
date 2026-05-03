@@ -1,0 +1,21 @@
+{
+  "dataset": {
+    "annotation_file": "annotation/examples/demo_annotation.json",
+    "split_file": "data/splits/demo_split.json"
+  },
+  "model": {
+    "name": "baseline_adapter_demo"
+  },
+  "train": {
+    "epochs": 1,
+    "batch_size": 1
+  },
+  "eval": {
+    "metrics": [
+      "mae",
+      "rmse"
+    ]
+  },
+  "output_dir": "outputs",
+  "seed": 0
+}

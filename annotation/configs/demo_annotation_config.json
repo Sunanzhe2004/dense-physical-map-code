@@ -1,0 +1,5 @@
+{
+  "schema_path": "annotation/schemas/annotation_schema.json",
+  "example_path": "annotation/examples/demo_annotation.json",
+  "export_path": "data/samples/annotations/demo_manifest.json"
+}

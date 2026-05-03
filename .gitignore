@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+
+# Runtime outputs
+outputs/*
+!outputs/.gitkeep
+!outputs/**/.gitkeep
+
+# Large local data
+data/raw/
+data/intermediate/
+data/private/
+
+# Logs and checkpoints
+logs/
+checkpoints/
+*.ckpt
+*.pth
+*.pt

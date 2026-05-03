@@ -1,0 +1,11 @@
+{
+  "train": [
+    "sample_0001"
+  ],
+  "val": [
+    "sample_0001"
+  ],
+  "test": [
+    "sample_0001"
+  ]
+}
