@@ -1,0 +1,24 @@
+{
+  "scene_summary": "A modern minimalist dining-room scene with a built-in display cabinet, a dining table and chairs, decorative wall art, and ceiling lighting.",
+  "albedo_material_notes": [
+    "The intrinsic color of the walls and cabinet frame is light gray, and the intrinsic color of the inner cabinet shelves is white.",
+    "Display items: the ceramic bottle is pure black; the deer ornament is metallic gold; the plant is green; and the flower pot is white.",
+    "The dining table intrinsic color is white, and the chair legs are light wood.",
+    "The wall painting has a white background with black-and-gold abstract patterns, which are intrinsic texture details that must be preserved.",
+    "The decorative flowers on the table are white, and the accompanying leaves are green."
+  ],
+  "albedo_lighting_notes": [
+    "Bright emitting regions from ceiling spotlights and the pendant lamp belong to light sources, not intrinsic material color.",
+    "Dark regions under cabinet shelves and beneath display items are environmental shadows and should be removed.",
+    "Bright spots on the ceramic bottle, metallic objects, and glass containers are specular highlights, not intrinsic color.",
+    "Over-bright areas near the right window are exposure artifacts rather than material color.",
+    "Brightness variation on the table surface is caused by illumination/reflection and should be normalized to a white intrinsic color."
+  ],
+  "albedo_prompt_suffix": "Preserve all intrinsic textures and patterns, and fully remove shadows, highlights, overexposure, and environmental reflections so intrinsic colors are accurate and consistent across materials.",
+  "per_view": [
+    {
+      "image_name": "004_im.png",
+      "albedo_hint": "Accurately recover the intrinsic colors of all display items in the cabinet, remove cabinet shadows and object-surface highlights, and preserve the complete wall-art pattern texture."
+    }
+  ]
+}

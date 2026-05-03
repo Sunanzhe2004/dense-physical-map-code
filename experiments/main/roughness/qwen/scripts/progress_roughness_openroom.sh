@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+BASE_OUTPUT_DIR="${BASE_OUTPUT_DIR:-/path/to/benchmark_outputs/roughness_qwen}"
+GT_ROOT="${GT_ROOT:-/path/to/benchmark_data/GT}"
+FILENAME_SUFFIX="${FILENAME_SUFFIX:-*_im.png}"
+OUTPUT_SUFFIX="${OUTPUT_SUFFIX:-*_im_roughness.png}"
+
+DATASET_NAMES=(
+  "openroomff_mainaxis"
+  "openroomff_stresstest"
+)
+
+INPUT_DIRS=(
+  "${GT_ROOT}/openroomff_mainaxis"
+  "${GT_ROOT}/openroomff_stresstest"
+)
+
+OUTPUT_DIRS=(
+  "${BASE_OUTPUT_DIR}/openroomff_mainaxis/roughness"
+  "${BASE_OUTPUT_DIR}/openroomff_stresstest/roughness"
+)
+
+total_input=0
+total_output=0
+workers=$(pgrep -fc 'roughness_generation_qwen_last.py' || true)
+workers="${workers:-0}"
+
+echo "active_workers=${workers}"
+printf "%-24s %10s %10s %10s %10s\n" "dataset" "input" "done" "remain" "percent"
+printf "%-24s %10s %10s %10s %10s\n" "------------------------" "----------" "----------" "----------" "----------"
+
+for idx in 0 1; do
+  dataset_name="${DATASET_NAMES[$idx]}"
+  input_dir="${INPUT_DIRS[$idx]}"
+  output_dir="${OUTPUT_DIRS[$idx]}"
+
+  if [[ -d "${input_dir}" ]]; then
+    input_count=$(find "${input_dir}" -type f -name "${FILENAME_SUFFIX}" | wc -l | tr -d ' ')
+  else
+    input_count=0
+  fi
+  if [[ -d "${output_dir}" ]]; then
+    output_count=$(find "${output_dir}" -type f -name "${OUTPUT_SUFFIX}" | wc -l | tr -d ' ')
+  else
+    output_count=0
+  fi
+
+  remain_count=$((input_count - output_count))
+  if (( remain_count < 0 )); then
+    remain_count=0
+  fi
+
+  if (( input_count > 0 )); then
+    percent=$(awk -v a="${output_count}" -v b="${input_count}" 'BEGIN { printf "%.2f%%", (a / b) * 100 }')
+  else
+    percent="0.00%"
+  fi
+
+  printf "%-24s %10d %10d %10d %10s\n" "${dataset_name}" "${input_count}" "${output_count}" "${remain_count}" "${percent}"
+
+  total_input=$((total_input + input_count))
+  total_output=$((total_output + output_count))
+done
+
+total_remain=$((total_input - total_output))
+if (( total_remain < 0 )); then
+  total_remain=0
+fi
+
+if (( total_input > 0 )); then
+  total_percent=$(awk -v a="${total_output}" -v b="${total_input}" 'BEGIN { printf "%.2f%%", (a / b) * 100 }')
+else
+  total_percent="0.00%"
+fi
+
+printf "%-24s %10s %10s %10s %10s\n" "------------------------" "----------" "----------" "----------" "----------"
+printf "%-24s %10d %10d %10d %10s\n" "TOTAL" "${total_input}" "${total_output}" "${total_remain}" "${total_percent}"

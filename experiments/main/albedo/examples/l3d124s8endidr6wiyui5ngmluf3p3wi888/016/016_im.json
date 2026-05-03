@@ -1,0 +1,23 @@
+{
+  "scene_summary": "A modern light-luxury dining-room interior scene with a dining table, chairs, wall panels, decorative artwork, and ceiling lighting.",
+  "albedo_material_notes": [
+    "The lower wall section is dark-gray paneling with gold decorative lines; both are intrinsic material colors.",
+    "The dining chairs have blue upholstered cushions with gold metallic frames as intrinsic colors.",
+    "The tabletop is white marble with natural light stone veining that is intrinsic texture.",
+    "The wall artwork has a light-gray base and blue lower pattern, both intrinsic colors.",
+    "The floor is light-gray marble with natural light stone texture as intrinsic texture."
+  ],
+  "albedo_lighting_notes": [
+    "Bright spots on the floor and table caused by ceiling lighting are highlights, not intrinsic material color.",
+    "Dark regions under chairs and beneath the table are shadows, not intrinsic material color.",
+    "Over-bright regions near windows are exposure effects, not intrinsic material color.",
+    "Locally bright wall areas are caused by overhead lighting and should be corrected to remove illumination influence."
+  ],
+  "albedo_prompt_suffix": "Preserve the panel gold lines, artwork patterns, intrinsic stone textures, and intrinsic colors of all objects, while fully removing shadows, highlights, exposure artifacts, and any illumination-driven brightness variation.",
+  "per_view": [
+    {
+      "image_name": "016_im.png",
+      "albedo_hint": "Remove strong floor highlights and shadows beneath chairs, while preserving intrinsic colors and textures of tableware and wall artwork."
+    }
+  ]
+}

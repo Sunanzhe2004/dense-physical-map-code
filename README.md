@@ -7,6 +7,14 @@ A Protocol-Conditioned Evaluation for Indoor Shape and Material Recovery**
 
 This repository provides benchmark-oriented code and release scaffolding for evaluating general-purpose image editors and related generative systems as single-image dense physical-map predictors without task-specific training. The focus is not a new task-specific model, but a reproducible evaluation protocol covering benchmark manifests, prompt and access-setting documentation, scene-audit scripts, metric computation utilities, and experiment organization.
 
+<p align="center">
+  <img src="docs/assets/motivation.png" alt="Benchmark motivation: from a single RGB indoor image to dense physical map prediction across geometry and material targets." width="100%">
+</p>
+
+<p align="center">
+  <em>Figure 1. Benchmark motivation and target scope: evaluating whether general-purpose image editors can recover dense geometry and material maps from a single RGB indoor image.</em>
+</p>
+
 ## Overview
 
 We study whether image editors can produce quantitatively reliable dense physical maps rather than merely plausible map-like images. The benchmark covers five indoor-scene targets:
@@ -92,7 +100,7 @@ The current tree already separates the benchmark workflow into a few clear layer
 
 - `annotation/`: public annotation schema, examples, validation, and scene-audit scripts.
 - `docs/`: installation, dataset, annotation, and experiment notes.
-- `experiments/`: main, ablation, and comparison experiment scaffolds with demo configs.
+- `experiments/`: target-wise main experiment scripts plus ablation and comparison experiment code.
 - `src/`: shared Python package code for IO, dataset parsing, metrics, and runners.
 - `tools/`: environment checks, demo data preparation, checkpoint conversion, and result summarization.
 - `tests/`: lightweight validation for configs, dataset parsing, and adapters.
@@ -145,11 +153,14 @@ Materialize the demo manifest:
 python tools/prepare_data.py
 ```
 
-Run the smoke-test main experiment:
+Browse the target-wise main experiment scripts:
 
-```bash
-python experiments/main/scripts/run_train.py --config experiments/main/configs/demo_main.json
-python experiments/main/scripts/run_eval.py --config experiments/main/configs/demo_main.json
+```text
+experiments/main/albedo/
+experiments/main/depth/
+experiments/main/metallic/
+experiments/main/normal/
+experiments/main/roughness/
 ```
 
 ## Data Preparation
@@ -184,7 +195,7 @@ At the same time, reproducibility claims should remain scoped:
 - `annotation/`: annotation contract, examples, and audit workflow.
 - `data/`: lightweight sample inputs and dataset placement conventions.
 - `docs/`: installation, dataset, annotation, and experiment documentation.
-- `experiments/main/`: primary experiment scaffold.
+- `experiments/main/`: target-wise main experiment scripts for albedo, depth, metallic, normal, and roughness.
 - `experiments/ablation/`: ablation experiment scaffold.
 - `experiments/comparison/`: comparison experiment scaffold and baseline adapters.
 - `src/`: shared package code.

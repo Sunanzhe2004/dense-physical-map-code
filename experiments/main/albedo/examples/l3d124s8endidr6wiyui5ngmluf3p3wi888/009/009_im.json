@@ -1,0 +1,23 @@
+{
+  "scene_summary": "A modern minimalist dining-room scene with a dining table, chairs, decorative wall art, a metallic pendant light, and a glass sliding door.",
+  "albedo_material_notes": [
+    "The wall intrinsic color is light gray. The wall painting has a white base with black-and-gold abstract patterns that must be preserved as intrinsic texture.",
+    "The dining table intrinsic color is white marble; placemats are light khaki; table mats are gray.",
+    "The pendant-light housing is metallic gold, and its top section is dark gray.",
+    "The chair frame intrinsic color is gold, and the seat cushion intrinsic color is blue.",
+    "The tabletop plant leaves are green; the bouquet is white; and the vase is dark-gray translucent."
+  ],
+  "albedo_lighting_notes": [
+    "Emissive regions from ceiling spotlights and pendant lights are exposure effects, not intrinsic material color.",
+    "Reflections on the table surface and glass sliding door are environmental reflections, not intrinsic material properties.",
+    "Dark regions on walls, cabinets, and furniture are environmental shadows and should be removed.",
+    "Bright floor regions are illumination overexposure, not intrinsic floor color."
+  ],
+  "albedo_prompt_suffix": "Preserve all intrinsic textures while removing shadows, highlights, exposure artifacts, and reflections so illumination-induced brightness variation is eliminated.",
+  "per_view": [
+    {
+      "image_name": "009_im.png",
+      "albedo_hint": "Keep the complete wall-art pattern, remove pendant-light shadows cast onto the table and wall, and clear reflection content on the glass sliding door."
+    }
+  ]
+}
