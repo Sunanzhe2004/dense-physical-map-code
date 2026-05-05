@@ -1,10 +1,5 @@
 # Can Image Editors Predict Dense Physical Maps?
 
-Official repository for:
-
-**Can Image Editors Predict Dense Physical Maps?  
-A Protocol-Conditioned Evaluation for Indoor Shape and Material Recovery**
-
 This repository provides benchmark-oriented code and release scaffolding for evaluating general-purpose image editors and related generative systems as single-image dense physical-map predictors without task-specific training. The focus is not a new task-specific model, but a reproducible evaluation protocol covering benchmark manifests, prompt and access-setting documentation, scene-audit scripts, metric computation utilities, and experiment organization.
 
 <p align="center">
