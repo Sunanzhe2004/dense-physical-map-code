@@ -1,11 +1,12 @@
 # Environment
 
-This project has two environment layers:
+This project has three environment layers:
 
 - the lightweight package skeleton used for shared utilities, tests, and demo data preparation;
 - the released main experiment environment used by the real target-wise generation scripts under `experiments/main/`.
+- the released ablation experiment environment used by the target-wise ablation scripts under `experiments/ablation/`.
 
-The second layer has additional runtime dependencies and provider-specific environment variables that are not yet declared in `pyproject.toml`.
+The second and third layers have additional runtime dependencies and provider-specific environment variables that are not yet declared in `pyproject.toml`.
 
 ## Base Python Environment
 
@@ -19,20 +20,21 @@ python -m pip install -e .
 
 This base setup is sufficient for the shared package code in `src/`, the demo preparation tools, and the lightweight test suite.
 
-## Main Experiment Runtime Dependencies
+## Released Experiment Runtime Dependencies
 
-The released main experiment scripts under `experiments/main/` additionally rely on:
+The released main and ablation experiment scripts additionally rely on:
 
 - `requests`
 - `Pillow`
 - `openai` for GPT / Azure OpenAI experiment families
 - `volcenginesdkarkruntime` for Doubao / ARK experiment families
+- `numpy` for the released roughness ablation diagnostics
 
 These dependencies are used directly by the released generation scripts rather than by the minimal package skeleton in `src/`.
 
 ## Environment Variable Groups
 
-Main experiments typically require three categories of variables:
+Released experiment scripts typically require three categories of variables:
 
 - local data and output paths such as `GT_ROOT`, `INPUT_DIR`, `OUTPUT_DIR`, and `BASE_OUTPUT_DIR`
 - provider credentials such as `ARK_API_KEY`, `DASHSCOPE_API_KEY`, `OPENAI_API_KEY`, or target-specific Azure aliases
@@ -87,6 +89,39 @@ Used by the Doubao experiment families under:
 - `experiments/main/normal/doubao/`
 - `experiments/main/roughness/doubao/`
 - `experiments/main/metallic/doubao/`
+- `experiments/ablation/albedo/`
+- `experiments/ablation/depth/`
+- `experiments/ablation/normal/`
+- `experiments/ablation/roughness/`
+
+## Ablation Experiment Notes
+
+The released ablation scripts under `experiments/ablation/` are currently Doubao / ARK based. In practice, they require:
+
+- `ARK_API_KEY`
+- local input and output paths such as `--input_dir`, `--output_dir`, and, for some variants, `--seg_dir`
+
+### Bundled Example Assets
+
+Several ablation folders now bundle fixed reference assets under `examples/` so that the repository can provide a stable default setup for example-based variants:
+
+- `experiments/ablation/albedo/examples/`
+- `experiments/ablation/depth/examples/`
+- `experiments/ablation/normal/examples/`
+- `experiments/ablation/roughness/examples/`
+
+When a variant supports overriding these assets, the corresponding CLI flags still take precedence.
+
+### Ablation Family Details
+
+- `experiments/ablation/albedo/`
+  Requires `requests`, `volcenginesdkarkruntime`, and, for the `A0` analysis-conditioned variant, `openai` plus `Pillow`.
+- `experiments/ablation/depth/`
+  Requires `requests`, `Pillow`, and `volcenginesdkarkruntime`.
+- `experiments/ablation/normal/`
+  Requires `requests` and `volcenginesdkarkruntime`.
+- `experiments/ablation/roughness/`
+  Requires `requests`, `Pillow`, `numpy`, and `volcenginesdkarkruntime`.
 
 ## Important Reproducibility Notes
 
@@ -99,4 +134,6 @@ Used by the Doubao experiment families under:
 For the full per-family environment-variable matrix and launcher expectations, see:
 
 - `experiments/main/README.md`
+- `experiments/ablation/README.md`
 - `docs/main_experiments.md`
+- `docs/ablations.md`
