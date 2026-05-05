@@ -31,7 +31,7 @@ except Exception:
     Image = None
     ImageOps = None
 
-DEFAULT_AZURE_ENDPOINT = "https://aif-icdevai02-eee-xjq-use2.cognitiveservices.azure.com/"
+DEFAULT_AZURE_ENDPOINT = "https://your-azure-openai-resource.openai.azure.com/"
 DEFAULT_API_VERSION = "2025-04-01-preview"
 DEFAULT_ANALYSIS_MODEL = "gpt-4o-mini"
 DEFAULT_NORMAL_MODEL = "gpt-image-1.5"

@@ -29,7 +29,7 @@ try:
 except Exception:
     Image = None
 
-DEFAULT_AZURE_ENDPOINT = "https://aif-icdevai02-eee-xjq-use2.cognitiveservices.azure.com/"
+DEFAULT_AZURE_ENDPOINT = "https://your-azure-openai-resource.openai.azure.com/"
 DEFAULT_API_VERSION = "2024-12-01-preview"
 DEFAULT_ALBEDO_MODEL = "gpt-image-1.5"
 DEFAULT_ALBEDO_QUALITY = "medium"
@@ -79,7 +79,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--detail", type=str, default="high", choices=["low", "high", "auto"], help="Legacy compatibility argument; currently unused.")
     parser.add_argument("--seed", type=int, default=123)
     parser.add_argument("--guidance_scale", type=float, default=5.5, help="Legacy compatibility argument; currently unused.")
-    parser.add_argument("--albedo_size", type=str, default="1536x1024", help="Output size for gpt-image-1.5. Supported values: 1024x1024, 1024x1536, 1536x1024, auto.")
+    parser.add_argument("--albedo_size", type=str, default="1536x1024", help="Output size for GPT image generation. Supported values: 1024x1024, 1024x1536, 1536x1024, auto.")
     parser.add_argument("--albedo_quality", type=str, default=DEFAULT_ALBEDO_QUALITY, choices=["low", "medium", "high", "auto"])
     parser.add_argument("--watermark", action="store_true", help="Legacy compatibility argument; currently unused.")
     parser.add_argument("--max_generate", type=int, default=0)
@@ -101,13 +101,15 @@ def ensure_api_key(cli_api_key: Optional[str] = None) -> str:
         cli_api_key
         or os.environ.get("AZURE_ALBEDO_OPENAI_API_KEY")
         or os.environ.get("AZURE_GPT_IMAGE_15_API_KEY")
+        or os.environ.get("AZURE_GPT_IMAGE_2_API_KEY")
         or os.environ.get("AZURE_OPENAI_API_KEY")
         or os.environ.get("OPENAI_API_KEY")
     )
     if not api_key:
         raise RuntimeError(
             "Missing albedo API key. Provide --albedo_api_key, --api_key, or one of the environment variables "
-            "AZURE_ALBEDO_OPENAI_API_KEY / AZURE_GPT_IMAGE_15_API_KEY / AZURE_OPENAI_API_KEY / OPENAI_API_KEY."
+            "AZURE_ALBEDO_OPENAI_API_KEY / AZURE_GPT_IMAGE_15_API_KEY / AZURE_GPT_IMAGE_2_API_KEY / "
+            "AZURE_OPENAI_API_KEY / OPENAI_API_KEY."
         )
     return api_key
 
@@ -118,6 +120,7 @@ def resolve_image_client_config(args: argparse.Namespace) -> Tuple[Any, str, str
         args.albedo_endpoint
         or args.azure_endpoint
         or os.environ.get("AZURE_ALBEDO_OPENAI_ENDPOINT")
+        or os.environ.get("AZURE_GPT_IMAGE_2_ENDPOINT")
         or os.environ.get("AZURE_GPT_IMAGE_15_ENDPOINT")
         or os.environ.get("AZURE_OPENAI_ENDPOINT")
     )
@@ -125,6 +128,7 @@ def resolve_image_client_config(args: argparse.Namespace) -> Tuple[Any, str, str
         args.albedo_api_version
         or args.api_version
         or os.environ.get("AZURE_ALBEDO_OPENAI_API_VERSION")
+        or os.environ.get("AZURE_GPT_IMAGE_2_API_VERSION")
         or os.environ.get("AZURE_GPT_IMAGE_15_API_VERSION")
         or os.environ.get("AZURE_OPENAI_API_VERSION")
     )

@@ -105,7 +105,7 @@ The current tree already separates the benchmark workflow into a few clear layer
 - `docs/`: installation, dataset, annotation, and experiment notes.
 - `experiments/`: target-wise main experiment scripts, target-wise ablation code, and comparison experiment code.
 - `src/`: shared Python package code for IO, dataset parsing, metrics, and runners.
-- `tools/`: environment checks, demo data preparation, checkpoint conversion, and result summarization.
+- `tools/`: environment checks, demo data preparation, and standalone evaluation scripts under `tools/evaluation/`.
 - `tests/`: lightweight smoke checks for the public annotation schema and dataset loading utilities.
 
 The current `annotation/scripts/` directory includes:
@@ -207,7 +207,7 @@ At the same time, reproducibility claims should remain scoped:
 - `experiments/ablation/`: target-wise ablation scripts for albedo, depth, normal, and roughness, including shared runners, thin variant entry points, example assets, and legacy scaffold files.
 - `experiments/comparison/`: comparison experiment scaffold and baseline adapters.
 - `src/`: shared package code.
-- `tools/`: utility scripts for data prep, environment checks, summarization, and conversion.
+- `tools/`: utility scripts for data prep, environment checks, and evaluation.
 - `tests/`: lightweight smoke checks.
 
 ## Documentation

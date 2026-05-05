@@ -6,7 +6,7 @@ This project has three environment layers:
 - the released main experiment environment used by the real target-wise generation scripts under `experiments/main/`.
 - the released ablation experiment environment used by the target-wise ablation scripts under `experiments/ablation/`.
 
-The second and third layers have additional runtime dependencies and provider-specific environment variables that are not yet declared in `pyproject.toml`.
+The second and third layers have additional runtime dependencies and provider-specific environment variables. The Python package dependencies are now exposed through optional extras in `pyproject.toml`, while provider credentials and local path variables still need to be configured manually.
 
 ## Base Python Environment
 
@@ -20,6 +20,14 @@ python -m pip install -e .
 
 This base setup is sufficient for the shared package code in `src/`, the demo preparation tools, and the lightweight test suite.
 
+Optional extras are available for the released experiment and evaluation stacks:
+
+```bash
+python -m pip install -e ".[main]"
+python -m pip install -e ".[ablation]"
+python -m pip install -e ".[evaluation]"
+```
+
 ## Released Experiment Runtime Dependencies
 
 The released main and ablation experiment scripts additionally rely on:
@@ -31,6 +39,32 @@ The released main and ablation experiment scripts additionally rely on:
 - `numpy` for the released roughness ablation diagnostics
 
 These dependencies are used directly by the released generation scripts rather than by the minimal package skeleton in `src/`.
+
+## Evaluation Script Dependencies
+
+The standalone evaluators under `tools/evaluation/` additionally rely on target-specific scientific and perceptual-metric packages:
+
+- `numpy`
+- `Pillow`
+- `scikit-image` for `SSIM`
+- `torch` and `lpips` for `LPIPS`
+- `scipy` for Kendall tau in affine-invariant depth evaluation
+- `OpenEXR` and `Imath` when reading `.exr` depth ground truth
+
+Some of these dependencies are optional at import time in the scripts, but the corresponding metrics or file-format readers are only available when the package is installed.
+
+### Evaluation Family Details
+
+- `tools/evaluation/eval_depth_maps.py`
+  Requires `numpy` and `Pillow`; additionally uses `scipy` for Kendall tau and `OpenEXR` plus `Imath` when reading `.exr` depth ground truth.
+- `tools/evaluation/eval_normal_maps.py`
+  Requires `numpy` and `Pillow`.
+- `tools/evaluation/eval_albedo_maps.py`
+  Requires `numpy` and `Pillow`; additionally uses `scikit-image` for `SSIM` and `torch` plus `lpips` when `LPIPS` is enabled.
+- `tools/evaluation/eval_roughness_maps.py`
+  Requires `numpy` and `Pillow`; additionally uses `scikit-image` for `SSIM` and `torch` plus `lpips` when `LPIPS` is enabled.
+- `tools/evaluation/eval_metallic_maps.py`
+  Requires `numpy`, `Pillow`, and `scikit-image`; additionally uses `torch` plus `lpips` unless `--skip_lpips` is passed.
 
 ## Environment Variable Groups
 
@@ -53,12 +87,16 @@ Common variables include:
 Used by the GPT experiment families under:
 
 - `experiments/main/albedo/gpt/`
+- `experiments/main/albedo/gpt2/`
 - `experiments/main/depth/gpt/`
+- `experiments/main/depth/gpt2/`
 - `experiments/main/normal/gpt/`
 - `experiments/main/roughness/gpt/`
 - `experiments/main/roughness/gpt2/`
 - `experiments/main/metallic/gpt/`
 - `experiments/main/metallic/gpt2/`
+
+For `experiments/main/albedo/gpt2/`, `experiments/main/depth/gpt2/`, and `experiments/main/roughness/gpt2/`, the `gpt2/` directories are thin wrappers over shared GPT-image generation logic and mainly pin the default model family, output root, and Azure/OpenAI alias chain.
 
 ### Qwen / DashScope
 

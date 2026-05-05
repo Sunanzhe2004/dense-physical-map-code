@@ -11,6 +11,14 @@
 python -m pip install -e .
 ```
 
+For released experiment scripts and evaluators, install the corresponding extras as needed:
+
+```bash
+python -m pip install -e ".[main]"
+python -m pip install -e ".[ablation]"
+python -m pip install -e ".[evaluation]"
+```
+
 ## Main Experiment Note
 
 The released scripts under `experiments/main/` require additional runtime libraries and provider-specific environment variables beyond the minimal package skeleton.

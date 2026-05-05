@@ -6,11 +6,13 @@ For consolidated environment setup, runtime dependencies, and provider-variable 
 
 ## Layout
 
-- `albedo/`: main albedo-generation scripts grouped by provider (`doubao`, `gpt`, `qwen`).
-- `depth/`: main relative-depth-generation scripts grouped by provider (`doubao`, `gpt`, `qwen`).
+- `albedo/`: main albedo-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
+- `depth/`: main relative-depth-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
 - `metallic/`: main metallic-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
 - `normal/`: main normal-generation scripts grouped by provider (`doubao`, `gpt`) plus fixed one-shot example pairs under `examples/`.
 - `roughness/`: main roughness-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
+
+For `albedo/`, `depth/`, and `roughness/`, the `gpt2/` folders are thin wrappers around the shared GPT-image generation logic. They are kept as separate directories so that released experiment paths stay explicit at the provider-and-model-family level while still avoiding duplicate implementation logic.
 
 Each provider folder now follows a cleaner split:
 
@@ -69,9 +71,11 @@ The minimum variables depend on which experiment family you run:
 |---|---|---|---|
 | `albedo/doubao` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `ARK_API_KEY_0..3` | `PYTHON_BIN`, `MAX_GENERATE` |
 | `albedo/gpt` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `ALBEDO_API_KEY`, `ALBEDO_ENDPOINT` | `ALBEDO_API_VERSION`, `ALBEDO_MODEL`, `ALBEDO_DEPLOYMENT` |
+| `albedo/gpt2` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `ALBEDO_API_KEY` or `AZURE_GPT_IMAGE_2_API_KEY` aliases | `ALBEDO_API_VERSION`, `ALBEDO_MODEL`, `ALBEDO_DEPLOYMENT` |
 | `albedo/qwen` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `DASHSCOPE_API_KEY` | `BASE_URL`, `ALBEDO_MODEL` |
 | `depth/doubao` | `GT_ROOT` or `INPUT_ROOT`, `BASE_OUTPUT_DIR` | `ARK_API_KEY` or `ARK_API_KEY_0..3` | `PYTHON_BIN`, `MAX_GENERATE` |
 | `depth/gpt` | `GT_ROOT` or `INPUT_ROOT`, `BASE_OUTPUT_DIR` | provider-specific Azure/OpenAI depth key vars used by the script | size / retry overrides |
+| `depth/gpt2` | `GT_ROOT` or `INPUT_ROOT`, `BASE_OUTPUT_DIR` | `AZURE_GPT_IMAGE_2_API_KEY` or broader Azure/OpenAI aliases | `IMAGE_MODEL`, `IMAGE_SIZE`, size / retry overrides |
 | `depth/qwen` | `GT_ROOT` or `INPUT_ROOT`, `BASE_OUTPUT_DIR` | `DASHSCOPE_API_KEY` or `DASHSCOPE_API_KEY_0..3` | `DASHSCOPE_BASE_URL`, `MAX_GENERATE` |
 | `normal/doubao` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `ARK_API_KEY_0..3` | `EXAMPLE_RGB`, `EXAMPLE_NORMAL` |
 | `normal/gpt` | `GT_ROOT`, `BASE_OUTPUT_DIR` | `AZURE_NORMAL_OPENAI_API_KEY`, `AZURE_NORMAL_OPENAI_ENDPOINT` | `AZURE_NORMAL_OPENAI_API_VERSION`, `EXAMPLE_RGB`, `EXAMPLE_NORMAL` |
@@ -90,12 +94,19 @@ If a script supports both a shared key and worker-specific keys, the worker-spec
 
 The GPT albedo scripts are Azure OpenAI based.
 
-- Model: `ALBEDO_MODEL` and `ALBEDO_DEPLOYMENT` default to `gpt-image-1.5`.
-- Key: `ALBEDO_API_KEY` or `AZURE_ALBEDO_OPENAI_API_KEY` or `AZURE_GPT_IMAGE_15_API_KEY`.
-- Endpoint: `ALBEDO_ENDPOINT` or `AZURE_ALBEDO_OPENAI_ENDPOINT` or `AZURE_GPT_IMAGE_15_ENDPOINT`.
+- Model: `ALBEDO_MODEL` and `ALBEDO_DEPLOYMENT` default to `gpt-image-1.5`, but the same scripts can also be pointed to `gpt-image-2`.
+- Key: `ALBEDO_API_KEY` or `AZURE_ALBEDO_OPENAI_API_KEY` or `AZURE_GPT_IMAGE_15_API_KEY` or `AZURE_GPT_IMAGE_2_API_KEY`.
+- Endpoint: `ALBEDO_ENDPOINT` or `AZURE_ALBEDO_OPENAI_ENDPOINT` or `AZURE_GPT_IMAGE_15_ENDPOINT` or `AZURE_GPT_IMAGE_2_ENDPOINT`.
 - API version: `ALBEDO_API_VERSION` or the matching Azure aliases.
 - Analysis input: the GPT albedo script does not run its own analysis model in the main experiment path. Its `analysis_model` is hard-coded to `external_json`, and it reads precomputed per-image analysis JSON files from `analysis_dirs`.
 - Default dependency: those `analysis_dirs` point to `benchmark_outputs/albedo_doubao/.../meta/per_image_analysis`, so the GPT albedo run expects Doubao-generated analysis files to already exist.
+
+The GPT depth scripts follow the same reuse pattern.
+
+- Model: `IMAGE_MODEL` defaults to `gpt-image-1.5`, but the same scripts can also be pointed to `gpt-image-2`.
+- Key: `AZURE_GPT_IMAGE_15_API_KEY` or `AZURE_GPT_IMAGE_2_API_KEY`, with broader `AZURE_OPENAI_API_KEY` / `OPENAI_API_KEY` fallbacks.
+- Endpoint: `AZURE_GPT_IMAGE_15_ENDPOINT` or `AZURE_GPT_IMAGE_2_ENDPOINT`, with broader `AZURE_OPENAI_ENDPOINT` fallback.
+- API version: `AZURE_GPT_IMAGE_15_API_VERSION` or `AZURE_GPT_IMAGE_2_API_VERSION`, with broader `AZURE_OPENAI_API_VERSION` fallback.
 
 The GPT normal scripts are also Azure OpenAI based.
 

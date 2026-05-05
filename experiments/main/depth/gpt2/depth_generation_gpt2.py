@@ -19,11 +19,11 @@ def map_env_if_missing(target: str, source: str) -> None:
 
 
 def main() -> None:
-    map_env_if_missing("AZURE_ROUGHNESS_OPENAI_API_KEY", "AZURE_GPT_IMAGE_2_API_KEY")
-    map_env_if_missing("AZURE_ROUGHNESS_OPENAI_ENDPOINT", "AZURE_GPT_IMAGE_2_ENDPOINT")
-    map_env_if_missing("AZURE_ROUGHNESS_OPENAI_API_VERSION", "AZURE_GPT_IMAGE_2_API_VERSION")
+    map_env_if_missing("AZURE_OPENAI_API_KEY", "AZURE_GPT_IMAGE_2_API_KEY")
+    map_env_if_missing("AZURE_OPENAI_ENDPOINT", "AZURE_GPT_IMAGE_2_ENDPOINT")
+    map_env_if_missing("AZURE_OPENAI_API_VERSION", "AZURE_GPT_IMAGE_2_API_VERSION")
     ensure_arg("--image_model", "gpt-image-2")
-    target = Path(__file__).resolve().parents[1] / "gpt" / "roughness_generation_gpt.py"
+    target = Path(__file__).resolve().parents[1] / "gpt" / "depth_generation_gpt.py"
     runpy.run_path(str(target), run_name="__main__")
 
 

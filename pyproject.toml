@@ -14,6 +14,44 @@ authors = [
 ]
 dependencies = []
 
+[project.optional-dependencies]
+main = [
+  "openai",
+  "Pillow",
+  "requests",
+  "volcenginesdkarkruntime",
+]
+ablation = [
+  "numpy",
+  "openai",
+  "Pillow",
+  "requests",
+  "volcenginesdkarkruntime",
+]
+evaluation = [
+  "Imath",
+  "lpips",
+  "numpy",
+  "OpenEXR",
+  "Pillow",
+  "scikit-image",
+  "scipy",
+  "torch",
+]
+full = [
+  "Imath",
+  "lpips",
+  "numpy",
+  "openai",
+  "OpenEXR",
+  "Pillow",
+  "requests",
+  "scikit-image",
+  "scipy",
+  "torch",
+  "volcenginesdkarkruntime",
+]
+
 [tool.setuptools]
 package-dir = { "" = "src" }
 

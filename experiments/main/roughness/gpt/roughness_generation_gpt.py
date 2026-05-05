@@ -32,7 +32,7 @@ else:
     _OPENAI_IMPORT_ERROR = None
 
 
-DEFAULT_AZURE_ENDPOINT = "https://aif-icdevai02-eee-xjq-use2.cognitiveservices.azure.com/"
+DEFAULT_AZURE_ENDPOINT = "https://your-azure-openai-resource.openai.azure.com/"
 DEFAULT_API_VERSION = "2024-12-01-preview"
 DEFAULT_BASE_URL = DEFAULT_AZURE_ENDPOINT
 DEFAULT_IMAGE_MODEL = "gpt-image-1.5"
@@ -49,7 +49,7 @@ SUPPORTED_GPT_IMAGE_SIZES = {"1024x1024", "1024x1536", "1536x1024", "auto"}
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Generate roughness maps with GPT Image 1.5 from RGB-only, RGB+example, or RGB+seg inputs."
+        description="Generate roughness maps with GPT image models from RGB-only, RGB+example, or RGB+seg inputs."
     )
     parser.add_argument("--input_dir", type=str, required=True, help="RGB image directory")
     parser.add_argument(
@@ -87,6 +87,7 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default=os.environ.get("AZURE_ROUGHNESS_OPENAI_ENDPOINT")
         or os.environ.get("AZURE_GPT_IMAGE_15_ENDPOINT")
+        or os.environ.get("AZURE_GPT_IMAGE_2_ENDPOINT")
         or os.environ.get("AZURE_OPENAI_ENDPOINT")
         or DEFAULT_BASE_URL,
         help="Azure OpenAI endpoint or OpenAI-compatible base URL",
@@ -96,6 +97,7 @@ def parse_args() -> argparse.Namespace:
         type=str,
         default=os.environ.get("AZURE_ROUGHNESS_OPENAI_API_VERSION")
         or os.environ.get("AZURE_GPT_IMAGE_15_API_VERSION")
+        or os.environ.get("AZURE_GPT_IMAGE_2_API_VERSION")
         or os.environ.get("AZURE_OPENAI_API_VERSION")
         or DEFAULT_API_VERSION,
         help="Azure OpenAI API version",
@@ -103,7 +105,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--image_model", type=str, default=DEFAULT_IMAGE_MODEL, help="Image generation model")
     parser.add_argument("--size", type=str, default=DEFAULT_IMAGE_SIZE, help="GPT Image output size")
     parser.add_argument("--image_quality", type=str, default=DEFAULT_IMAGE_QUALITY, choices=["low", "medium", "high", "auto"])
-    parser.add_argument("--watermark", action="store_true", help="Compatibility flag; ignored for GPT Image 1.5")
+    parser.add_argument("--watermark", action="store_true", help="Compatibility flag; ignored for GPT image generation")
     parser.add_argument("--timeout", type=int, default=DEFAULT_TIMEOUT, help="Request and download timeout")
     parser.add_argument("--sleep", type=float, default=0.2, help="Sleep between requests")
     parser.add_argument("--max_generate", type=int, default=0, help="0 means process all images")
@@ -135,6 +137,7 @@ def ensure_api_key(cli_api_key: Optional[str] = None) -> str:
         cli_api_key
         or os.environ.get("AZURE_ROUGHNESS_OPENAI_API_KEY")
         or os.environ.get("AZURE_GPT_IMAGE_15_API_KEY")
+        or os.environ.get("AZURE_GPT_IMAGE_2_API_KEY")
         or os.environ.get("AZURE_OPENAI_API_KEY")
         or os.environ.get("OPENAI_API_KEY")
     )
@@ -150,7 +153,8 @@ def ensure_api_key(cli_api_key: Optional[str] = None) -> str:
         return api_key
     raise RuntimeError(
         "Missing authentication: please provide --api_key or set "
-        "AZURE_ROUGHNESS_OPENAI_API_KEY / AZURE_GPT_IMAGE_15_API_KEY / AZURE_OPENAI_API_KEY / OPENAI_API_KEY."
+        "AZURE_ROUGHNESS_OPENAI_API_KEY / AZURE_GPT_IMAGE_15_API_KEY / AZURE_GPT_IMAGE_2_API_KEY / "
+        "AZURE_OPENAI_API_KEY / OPENAI_API_KEY."
     )
 
 
@@ -160,12 +164,14 @@ def resolve_image_client_config(args: argparse.Namespace) -> Tuple[Any, str, str
         args.base_url
         or os.environ.get("AZURE_ROUGHNESS_OPENAI_ENDPOINT")
         or os.environ.get("AZURE_GPT_IMAGE_15_ENDPOINT")
+        or os.environ.get("AZURE_GPT_IMAGE_2_ENDPOINT")
         or os.environ.get("AZURE_OPENAI_ENDPOINT")
     )
     api_version = (
         args.api_version
         or os.environ.get("AZURE_ROUGHNESS_OPENAI_API_VERSION")
         or os.environ.get("AZURE_GPT_IMAGE_15_API_VERSION")
+        or os.environ.get("AZURE_GPT_IMAGE_2_API_VERSION")
         or os.environ.get("AZURE_OPENAI_API_VERSION")
     )
     deployment = args.image_model
@@ -215,7 +221,7 @@ def normalize_gpt_image_size(size: Optional[str]) -> str:
         normalized = DEFAULT_IMAGE_SIZE
     if normalized not in SUPPORTED_GPT_IMAGE_SIZES:
         raise ValueError(
-            f"Unsupported --size for gpt-image-1.5: {size}. "
+            f"Unsupported --size for GPT image generation: {size}. "
             f"Choices: {', '.join(sorted(SUPPORTED_GPT_IMAGE_SIZES))}"
         )
     return normalized

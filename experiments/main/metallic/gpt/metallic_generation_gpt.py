@@ -31,7 +31,7 @@ else:
     _OPENAI_IMPORT_ERROR = None
 
 
-DEFAULT_AZURE_ENDPOINT = "https://aif-icdevai02-eee-xjq-use2.cognitiveservices.azure.com/"
+DEFAULT_AZURE_ENDPOINT = "https://your-azure-openai-resource.openai.azure.com/"
 DEFAULT_API_VERSION = "2024-12-01-preview"
 DEFAULT_BASE_URL = DEFAULT_AZURE_ENDPOINT
 DEFAULT_IMAGE_MODEL = "gpt-image-1.5"

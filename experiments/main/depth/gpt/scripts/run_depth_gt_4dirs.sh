@@ -44,9 +44,10 @@ PIDS=()
 
 for ((worker_id = 0; worker_id < WORKERS; worker_id++)); do
   key_var="AZURE_GPT_IMAGE_15_API_KEY_${worker_id}"
-  worker_api_key="${!key_var:-${AZURE_GPT_IMAGE_15_API_KEY:-${AZURE_OPENAI_API_KEY:-${OPENAI_API_KEY:-}}}}"
+  key_var_gpt2="AZURE_GPT_IMAGE_2_API_KEY_${worker_id}"
+  worker_api_key="${!key_var:-${!key_var_gpt2:-${AZURE_GPT_IMAGE_15_API_KEY:-${AZURE_GPT_IMAGE_2_API_KEY:-${AZURE_OPENAI_API_KEY:-${OPENAI_API_KEY:-}}}}}}"
   if [[ -z "${worker_api_key}" ]]; then
-    echo "${key_var} or AZURE_GPT_IMAGE_15_API_KEY/AZURE_OPENAI_API_KEY/OPENAI_API_KEY is not set." >&2
+    echo "${key_var} or ${key_var_gpt2} or AZURE_GPT_IMAGE_15_API_KEY/AZURE_GPT_IMAGE_2_API_KEY/AZURE_OPENAI_API_KEY/OPENAI_API_KEY is not set." >&2
     exit 1
   fi
 
@@ -56,6 +57,7 @@ for ((worker_id = 0; worker_id < WORKERS; worker_id++)); do
   (
     set +e
     export AZURE_GPT_IMAGE_15_API_KEY="${worker_api_key}"
+    export AZURE_GPT_IMAGE_2_API_KEY="${worker_api_key}"
     status=0
     for ((i = worker_id; i < ${#SCENE_DIRS[@]}; i += WORKERS)); do
       input_dir="${SCENE_DIRS[$i]}"
