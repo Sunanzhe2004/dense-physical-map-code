@@ -161,6 +161,8 @@ Materialize the demo manifest:
 python tools/prepare_data.py
 ```
 
+The `experiments/main/` directory contains the main experiment code for the official target-wise evaluation runs:
+
 Browse the target-wise main experiment scripts:
 
 ```text

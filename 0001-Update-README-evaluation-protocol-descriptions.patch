@@ -1,0 +1,96 @@
+From 66352e9ea42cfb53527ae11903a2b5b684d12bb4 Mon Sep 17 00:00:00 2001
+From: cheems <2715745003@qq.com>
+Date: Tue, 5 May 2026 01:46:45 +0800
+Subject: [PATCH] Update README evaluation protocol descriptions
+
+---
+ README.md | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
+
+diff --git a/README.md b/README.md
+index eb6e9e5..c61cdb9 100644
+--- a/README.md
++++ b/README.md
+@@ -19,11 +19,11 @@ This repository provides benchmark-oriented code and release scaffolding for eva
+ 
+ We study whether image editors can produce quantitatively reliable dense physical maps rather than merely plausible map-like images. The benchmark covers five indoor-scene targets:
+ 
+-- `depth`: scene structure recovery.
+-- `normal`: surface orientation recovery.
++- `depth`: relative scene-geometry recovery.
++- `normal`: surface-orientation recovery.
+ - `albedo`: intrinsic reflectance-color recovery.
+-- `roughness`: scalar material roughness recovery.
+-- `metallic`: sparse metallic-region recovery.
++- `roughness`: bounded scalar material-roughness recovery.
++- `metallic`: bounded continuous metallic-map recovery.
+ 
+ Results should be interpreted as **model--access-setting measurements**, not as interface-free rankings of intrinsic model capability.
+ 
+@@ -49,13 +49,15 @@ Important scope notes:
+ 
+ | Target | Official source(s) | Primary metric | Secondary diagnostics |
+ |---|---|---|---|
+-| Depth | OpenRooms-FF, InteriorVerse | AbsRel | RMSE / source-specific breakdowns |
++| Depth | OpenRooms-FF, InteriorVerse | AbsRel-AI | RMSE-AI, MAE-AI, delta1-AI, delta2-AI, Boundary F1 |
+ | Normal | OpenRooms-FF, InteriorVerse | Acc@22.5 | Mean angular, Median angular, Acc@11.25, Acc@30 |
+ | Albedo | OpenRooms-FF, InteriorVerse | MAE | PSNR, SSIM, LPIPS |
+-| Roughness | OpenRooms-FF | RMSE | MAE, PSNR, SSIM |
+-| Metallic | Companion metallic source | F1@0.5_micro | MAE, PSNR, SSIM |
++| Roughness | OpenRooms-FF | RMSE | MAE, SSIM, PSNR |
++| Metallic | Companion metallic source | MAE | PSNR, SSIM, LPIPS |
+ 
+-For metallic, `F1@0.5_micro` is the preferred primary metric because metallic maps are sparse and full-map scalar errors can be dominated by non-metallic background pixels.
++`AI` denotes affine-invariant depth scoring after prediction normalization, polarity selection, and per-image affine fitting. Depth metrics therefore evaluate relative-geometry fidelity rather than calibrated metric-depth accuracy.
++
++Metallic is evaluated as a continuous bounded map within `MetallicEvalMask`, not as a thresholded binary detection task. MAE is the primary scalar distortion metric, while PSNR, SSIM, and LPIPS are retained as full-map diagnostics. Because metallic regions are sparse, continuous full-map scores should be interpreted as masked metallic-value fidelity rather than explicit metallic-region detection accuracy.
+ 
+ ## Source Design
+ 
+@@ -66,7 +68,7 @@ The benchmark is target-dependent rather than source-uniform.
+ - InteriorVerse roughness and metallic are excluded from official scoring when material-channel reliability is not adequate.
+ - A companion metallic source is used for official metallic evaluation.
+ 
+-The companion metallic source is intended to provide auditable metallic-region supervision. It should not be interpreted as estimating the natural frequency of metallic materials in real indoor imagery.
++The companion metallic source is intended to provide auditable continuous metallic-map supervision under a bounded `[0,1]` material-parameter convention. It should not be interpreted as estimating the natural frequency of metallic materials in real indoor imagery, and official scores should not be read as thresholded metallic-region detection accuracy.
+ 
+ ## Access Settings
+ 
+@@ -79,16 +81,22 @@ The system receives only:
+ - the query RGB image;
+ - a fixed target-definition instruction.
+ 
+-No paired exemplars, masks, region-filling priors, external references, per-image prompt selection, or cross-view input are used. This track is the main evaluation setting for roughness and metallic.
++No paired exemplars, masks, region-filling priors, external references, per-image prompt selection, or cross-view input are used.
++
++This track is the official main setting for:
++
++- `depth`: controlled RGB-to-relative-depth prompting. Affine alignment and polarity selection are scoring-time operations, not model inputs.
++- `roughness`: controlled RGB-to-map prompting.
++- `metallic`: controlled RGB-to-map prompting.
+ 
+ ### Target-Specific Elicitation Track
+ 
+ This track is used when a minimal RGB-to-map prompt does not reliably specify the target convention.
+ 
+-- `albedo` may use query-image-only auxiliary analysis plus a fixed illumination-suppression / structure-preservation instruction.
+-- `normal` may use fixed RGB-normal exemplar pairs to communicate the normal-map convention.
++- `albedo` uses query-image-only auxiliary analysis plus a fixed illumination-suppression / structure-preservation instruction.
++- `normal` uses fixed RGB-normal exemplar pairs to communicate the normal-map convention.
+ 
+-These results are still reported as model--access-setting measurements.
++These results are reported as model--access-setting measurements, not as prompt-invariant or interface-free model capability estimates.
+ 
+ ### Diagnostic Track
+ 
+@@ -182,6 +190,7 @@ This repository is designed so that a benchmark release can expose:
+ - evaluation scripts with fixed metrics and masking behavior;
+ - stress-subset metadata and aggregation utilities;
+ - versioned experiment configs for main, ablation, and comparison tracks.
++- for proprietary outputs that cannot be redistributed, prompts, output manifests, version records, request dates, file hashes, output-shape metadata, evaluator logs, failure logs, and post-processing records so that reported scores can be audited against frozen generation manifests.
+ 
+ At the same time, reproducibility claims should remain scoped:
+ 
+-- 
+2.53.0.windows.1
+
