@@ -11,9 +11,15 @@
 python -m pip install -e .
 ```
 
+## Main Experiment Note
+
+The released scripts under `experiments/main/` require additional runtime libraries and provider-specific environment variables beyond the minimal package skeleton.
+
+See [docs/environment.md](environment.md) for the consolidated environment guide.
+
 ## Smoke Checks
 
 ```bash
 python tools/check_env.py
-python -m unittest discover -s tests -p "test_*.py"
+python -m unittest tests.test_annotation_schema tests.test_dataset_loading
 ```

@@ -103,10 +103,10 @@ The current tree already separates the benchmark workflow into a few clear layer
 
 - `annotation/`: public annotation schema, examples, validation, and scene-audit scripts.
 - `docs/`: installation, dataset, annotation, and experiment notes.
-- `experiments/`: target-wise main experiment scripts plus ablation and comparison experiment code.
+- `experiments/`: target-wise main experiment scripts, target-wise ablation code, and comparison experiment code.
 - `src/`: shared Python package code for IO, dataset parsing, metrics, and runners.
 - `tools/`: environment checks, demo data preparation, checkpoint conversion, and result summarization.
-- `tests/`: lightweight validation for configs, dataset parsing, and adapters.
+- `tests/`: lightweight smoke checks for the public annotation schema and dataset loading utilities.
 
 The current `annotation/scripts/` directory includes:
 
@@ -141,6 +141,8 @@ Then check the local environment:
 ```bash
 python tools/check_env.py
 ```
+
+For the released main experiment runtime dependencies and provider-specific environment variables, see [docs/environment.md](docs/environment.md).
 
 ## Quick Start
 
@@ -202,15 +204,16 @@ At the same time, reproducibility claims should remain scoped:
 - `data/`: lightweight sample inputs and dataset placement conventions.
 - `docs/`: installation, dataset, annotation, and experiment documentation.
 - `experiments/main/`: target-wise main experiment scripts for albedo, depth, metallic, normal, and roughness.
-- `experiments/ablation/`: ablation experiment scaffold.
+- `experiments/ablation/`: target-wise ablation scripts for albedo, depth, normal, and roughness, including shared runners, thin variant entry points, example assets, and legacy scaffold files.
 - `experiments/comparison/`: comparison experiment scaffold and baseline adapters.
 - `src/`: shared package code.
 - `tools/`: utility scripts for data prep, environment checks, summarization, and conversion.
-- `tests/`: lightweight checks.
+- `tests/`: lightweight smoke checks.
 
 ## Documentation
 
 - Installation: [docs/install.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/install.md)
+- Environment: [docs/environment.md](docs/environment.md)
 - Dataset: [docs/dataset.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/dataset.md)
 - Annotation: [docs/annotation.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/annotation.md)
 - Main experiments: [docs/main_experiments.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/main_experiments.md)

@@ -2,6 +2,8 @@
 
 This directory now stores the real target-wise main experiment scripts rather than the earlier demo scaffold.
 
+For consolidated environment setup, runtime dependencies, and provider-variable guidance, see [docs/environment.md](../../docs/environment.md).
+
 ## Layout
 
 - `albedo/`: main albedo-generation scripts grouped by provider (`doubao`, `gpt`, `qwen`).

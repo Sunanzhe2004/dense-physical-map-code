@@ -47,3 +47,4 @@ This layout keeps target-specific prompt logic, provider-specific API handling, 
 - `normal/examples/` stores the fixed RGB-normal example pairs used by the exemplar-conditioned normal protocol.
 - `metallic/` uses the target name `metallic` to stay consistent with the benchmark terminology, even though the legacy source directory was named `metallicity`.
 - The old placeholder files under `experiments/main/scripts/`, `experiments/main/methods/`, and `experiments/main/configs/demo_main.json` have been removed.
+- Environment setup for the released main experiment scripts is summarized in [docs/environment.md](environment.md).
