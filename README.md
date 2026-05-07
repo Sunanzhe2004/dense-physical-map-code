@@ -8,8 +8,17 @@ This repository provides benchmark-oriented code and release scaffolding for eva
 
 ## Visual Materials
 
-- Project overview: [`annotation/overview.pdf`](./annotation/overview.pdf)
-- Generated results: [`annotation/results.pdf`](./annotation/results.pdf)
+[![Project overview](./annotation/overview.png)](./annotation/overview.pdf)
+
+<p align="center">
+  <em>Project overview. Click the preview to open the full PDF.</em>
+</p>
+
+[![Generated results](./annotation/results.png)](./annotation/results.pdf)
+
+<p align="center">
+  <em>Generated results preview. Click the preview to open the full PDF.</em>
+</p>
 
 ## Overview
 

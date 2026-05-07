@@ -4,8 +4,17 @@ This directory isolates the public annotation contract from model training code.
 
 ## Overview
 
-Project overview PDF: [`overview.pdf`](./overview.pdf)
-Generated results PDF: [`results.pdf`](./results.pdf)
+[![Project overview](./overview.png)](./overview.pdf)
+
+<p align="center">
+  <em>Project overview. Click the preview to open the full PDF.</em>
+</p>
+
+[![Generated results](./results.png)](./results.pdf)
+
+<p align="center">
+  <em>Generated results preview. Click the preview to open the full PDF.</em>
+</p>
 
 ## Public Surface
 
