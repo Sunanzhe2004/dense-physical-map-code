@@ -6,7 +6,7 @@ For consolidated environment setup, runtime dependencies, and provider-variable 
 
 ## Layout
 
-- `albedo/`: main albedo-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
+- `albedo/`: main albedo-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`) plus fixed documentation examples under `examples/`.
 - `depth/`: main relative-depth-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
 - `metallic/`: main metallic-generation scripts grouped by provider (`doubao`, `gpt`, `gpt2`, `qwen`).
 - `normal/`: main normal-generation scripts grouped by provider (`doubao`, `gpt`) plus fixed one-shot example pairs under `examples/`.
@@ -49,6 +49,7 @@ If you leave these placeholder values unchanged, the scripts are expected to fai
 
 - Main experiment Python scripts.
 - Shell launchers for foreground, detached, and progress-tracking runs.
+- Fixed albedo documentation examples under `experiments/main/albedo/examples/`.
 - Fixed normal exemplar image pairs under `experiments/main/normal/examples/`.
 - Prompt construction logic that is embedded in the released Python scripts.
 - README-level guidance on provider-specific environment variables and access assumptions.
