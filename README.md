@@ -3,9 +3,6 @@
 This repository provides benchmark-oriented code and release scaffolding for evaluating general-purpose image editors and related generative systems as single-image dense physical-map predictors without task-specific training. The focus is not a new task-specific model, but a reproducible evaluation protocol covering benchmark manifests, prompt and access-setting documentation, scene-audit scripts, metric computation utilities, and experiment organization.
 
 <p align="center">
-</p>
-
-<p align="center">
   <em>Figure 1. Benchmark motivation and target scope: evaluating whether general-purpose image editors can recover dense geometry and material maps from a single RGB indoor image.</em>
 </p>
 
@@ -203,7 +200,7 @@ At the same time, reproducibility claims should remain scoped:
 - `data/`: lightweight sample inputs and dataset placement conventions.
 - `docs/`: installation, dataset, annotation, and experiment documentation.
 - `experiments/main/`: target-wise main experiment scripts for albedo, depth, metallic, normal, and roughness.
-- `experiments/ablation/`: target-wise ablation scripts for albedo, depth, normal, and roughness, including shared runners, thin variant entry points, example assets, and legacy scaffold files.
+- `experiments/ablation/`: target-wise ablation scripts for albedo, depth, metallic, normal, and roughness, including shared runners, thin variant entry points, and example assets.
 - `experiments/comparison/`: comparison experiment scaffold and baseline adapters.
 - `src/`: shared package code.
 - `tools/`: utility scripts for data prep, environment checks, and evaluation.
@@ -211,13 +208,13 @@ At the same time, reproducibility claims should remain scoped:
 
 ## Documentation
 
-- Installation: [docs/install.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/install.md)
+- Installation: [docs/install.md](docs/install.md)
 - Environment: [docs/environment.md](docs/environment.md)
-- Dataset: [docs/dataset.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/dataset.md)
-- Annotation: [docs/annotation.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/annotation.md)
-- Main experiments: [docs/main_experiments.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/main_experiments.md)
-- Ablations: [docs/ablations.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/ablations.md)
-- Comparisons: [docs/comparisons.md](/abs/path/C:/Users/CodexSandboxOffline/.codex/.sandbox/cwd/7075373748567092/docs/comparisons.md)
+- Dataset: [docs/dataset.md](docs/dataset.md)
+- Annotation: [docs/annotation.md](docs/annotation.md)
+- Main experiments: [docs/main_experiments.md](docs/main_experiments.md)
+- Ablations: [docs/ablations.md](docs/ablations.md)
+- Comparisons: [docs/comparisons.md](docs/comparisons.md)
 
 Detailed benchmark-specific documentation can be split further before public release, for example into dedicated notes for access settings, metrics, stress subsets, companion metallic data, model versioning, and reproducibility checklists.
 

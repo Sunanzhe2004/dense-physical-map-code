@@ -2,12 +2,7 @@
 
 Ablations live under `experiments/ablation/`.
 
-The directory now contains two layers:
-
-- released target-wise ablation scripts for `albedo`, `depth`, `normal`, and `roughness`
-- older lightweight scaffold files under `configs/`, `scripts/`, and `variants/`
-
-The released target-wise folders are the primary ablation code paths.
+The directory now contains released target-wise ablation scripts for `albedo`, `depth`, `metallic`, `normal`, and `roughness`.
 
 The recently reorganized target-wise folders follow the same broad pattern where practical:
 
@@ -19,6 +14,7 @@ This `examples/` pattern now applies across the reorganized released folders:
 
 - `experiments/ablation/albedo/examples/`
 - `experiments/ablation/depth/examples/`
+- `experiments/ablation/metallic/examples/`
 - `experiments/ablation/normal/examples/`
 - `experiments/ablation/roughness/examples/`
 
@@ -29,6 +25,7 @@ For the released target-wise ablations, start from the corresponding subdirector
 ```text
 experiments/ablation/albedo/
 experiments/ablation/depth/
+experiments/ablation/metallic/
 experiments/ablation/normal/
 experiments/ablation/roughness/
 ```
@@ -37,6 +34,7 @@ Representative entry scripts include:
 
 ```bash
 python experiments/ablation/albedo/run_albedo_multiview_seed2_a0.py --help
+python experiments/ablation/metallic/metallic_ablation_runner_strict_final.py --help
 python experiments/ablation/normal/run_normal_a0.py --help
 python experiments/ablation/roughness/roughness_ablation_runner.py --help
 python experiments/ablation/depth/depth_generation_a0.py --help
@@ -54,27 +52,19 @@ The released depth ablations are now organized as a shared runner plus thin entr
 
 This means the depth ablation release is no longer just a set of unrelated large standalone scripts. The reusable logic now lives in one place, while the variant entry files stay small and easier to audit.
 
-The older scaffold entry points are still present as generic examples:
-
-```bash
-python experiments/ablation/scripts/run_train.py --config experiments/ablation/configs/demo_ablation.json
-python experiments/ablation/scripts/run_eval.py --config experiments/ablation/configs/demo_ablation.json
-```
-
 ## Coverage
 
 The current ablation import covers:
 
 - `albedo`
 - `depth`
+- `metallic`
 - `normal`
 - `roughness`
-
-`metallic` ablation code has not been added yet.
 
 ## Naming
 
 Use run names that encode the variant, for example:
 
-- `remove_depth_guidance_seed0`
 - `no_physics_loss_seed1`
+- `metallic_a2_region_fill_seed0`

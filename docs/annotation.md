@@ -21,7 +21,7 @@ The annotation workspace is isolated from training code.
 - `validate_annotations.py`: validates annotation JSON files before release or conversion.
 - `audit_scenes_doubao.py`: runs batch scene audit with Doubao.
 - `audit_scenes_glm.py`: runs batch scene audit with GLM.
-- `audit_scenes_qwen_stats.py`: runs batch scene audit with Qwen and fills several lighting-related fields from programmatic image statistics.
+- `audit_scenes_qwen.py`: runs batch scene audit with Qwen and fills several lighting-related fields from programmatic image statistics.
 - `review_scene_audits_doubao.py`: reviews scenes whose three audit outputs remain inconsistent after merge; the merged result uses majority voting as supporting context, and the script produces a final arbitration result from the images plus merged evidence.
 - `scene_audit_prompts.py`: stores shared English prompt templates.
 - `scene_audit_utils.py`: stores shared helpers for lighting statistics, image encoding, and result parsing.
