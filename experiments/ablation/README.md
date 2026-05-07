@@ -7,6 +7,7 @@ This directory now contains the released ablation code that accompanies the main
 - `albedo/`: released albedo ablation scripts and small example assets.
 - `depth/`: released depth ablation scripts and small example assets.
 - `normal/`: released normal ablation runner plus variant entry scripts and bundled exemplar pairs under `normal/examples/`.
+- `metallic/`: released metallic ablation runner and shared variant logic.
 - `roughness/`: released roughness ablation runner, variant logic, and bundled example assets under `roughness/examples/`.
 - `configs/`, `scripts/`, `variants/`: earlier lightweight scaffold files kept as generic examples.
 
@@ -17,9 +18,8 @@ The currently imported released ablation code covers:
 - `albedo`
 - `depth`
 - `normal`
+- `metallic`
 - `roughness`
-
-`metallic` ablation code is not included in this directory yet, so the ablation release currently covers all main targets except metallic.
 
 ## Organization Notes
 

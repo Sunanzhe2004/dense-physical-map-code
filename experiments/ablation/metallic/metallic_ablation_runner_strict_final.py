@@ -90,7 +90,7 @@ def relpath_or_name(path: Path, root: Path) -> Path:
 
 def main() -> None:
     args = parse_args()
-    api_key = ensure_api_key()
+    ensure_api_key()
 
     if Ark is None:
         raise ImportError(
@@ -140,7 +140,7 @@ def main() -> None:
         f"model={args.image_model}, variants={','.join(variant_ids)}"
     )
 
-    ark_client = Ark(base_url=args.base_url, api_key=api_key)
+    ark_client = Ark(base_url=args.base_url, api_key=ensure_api_key())
     ablation_root = Path(args.output_dir).expanduser()
     ablation_root.mkdir(parents=True, exist_ok=True)
     normalized_seg_suffix = normalize_seg_suffix(args.seg_suffix)

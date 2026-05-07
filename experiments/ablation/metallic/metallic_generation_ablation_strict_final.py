@@ -31,7 +31,7 @@ from PIL import Image
 
 
 def _load_main_metallic_module() -> Any:
-    repo_root = Path(__file__).resolve().parents[2]
+    repo_root = Path(__file__).resolve().parents[3]
     module_path = repo_root / "experiments" / "main" / "metallic" / "doubao" / "metallic_generation_doubao_final.py"
     if not module_path.exists():
         raise FileNotFoundError(f"Main Doubao metallic script not found: {module_path}")
