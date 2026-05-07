@@ -2,6 +2,11 @@
 
 This directory isolates the public annotation contract from model training code.
 
+## Overview
+
+Project overview PDF: [`overview.pdf`](./overview.pdf)
+Generated results PDF: [`results.pdf`](./results.pdf)
+
 ## Public Surface
 
 - Schema: `annotation/schemas/annotation_schema.json`

@@ -6,6 +6,11 @@ This repository provides benchmark-oriented code and release scaffolding for eva
   <em>Figure 1. Benchmark motivation and target scope: evaluating whether general-purpose image editors can recover dense geometry and material maps from a single RGB indoor image.</em>
 </p>
 
+## Visual Materials
+
+- Project overview: [`annotation/overview.pdf`](./annotation/overview.pdf)
+- Generated results: [`annotation/results.pdf`](./annotation/results.pdf)
+
 ## Overview
 
 We study whether image editors can produce quantitatively reliable dense physical maps rather than merely plausible map-like images. The benchmark covers five indoor-scene targets:
