@@ -1,6 +1,6 @@
 # Metallic Ablations
 
-This directory contains the released metallic ablation scripts.
+This directory contains the released metallic ablation scripts and lightweight example assets.
 
 ## Variants
 
@@ -13,6 +13,15 @@ This directory contains the released metallic ablation scripts.
 
 - `metallic_generation_ablation_strict_final.py`: shared variant definitions and reusable generation helpers.
 - `metallic_ablation_runner_strict_final.py`: multi-variant ablation runner for released `A0-A3` experiments.
+
+## Example Assets
+
+Lightweight reference assets live under `examples/`:
+
+- `examples/image.png`
+- `examples/metallic.png`
+
+`A3` uses these files by default unless `--example_rgb` and `--example_metallic` are provided explicitly.
 
 ## Usage Notes
 

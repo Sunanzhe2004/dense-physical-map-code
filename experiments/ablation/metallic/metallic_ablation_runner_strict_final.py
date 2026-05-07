@@ -81,6 +81,14 @@ def ensure_example_pair(example_rgb: Optional[Path], example_metallic: Optional[
             raise FileNotFoundError(f"{name} not found: {path_obj}")
 
 
+def resolve_default_example_pair(args: argparse.Namespace) -> tuple[Optional[Path], Optional[Path]]:
+    script_dir = Path(__file__).resolve().parent
+    examples_dir = script_dir / "examples"
+    example_rgb = Path(args.example_rgb).expanduser() if args.example_rgb else examples_dir / "image.png"
+    example_metallic = Path(args.example_metallic).expanduser() if args.example_metallic else examples_dir / "metallic.png"
+    return example_rgb, example_metallic
+
+
 def relpath_or_name(path: Path, root: Path) -> Path:
     try:
         return path.relative_to(root)
@@ -100,8 +108,8 @@ def main() -> None:
     variant_ids = resolve_variant_ids(args)
     input_dir = Path(args.input_dir).expanduser()
     seg_dir = Path(args.seg_dir).expanduser() if args.seg_dir else None
-    example_rgb = Path(args.example_rgb).expanduser() if args.example_rgb else None
-    example_metallic = Path(args.example_metallic).expanduser() if args.example_metallic else None
+    example_rgb = None
+    example_metallic = None
 
     if looks_like_object_seg_dir(input_dir):
         inferred_rgb_dir = infer_rgb_dir_from_seg_dir(input_dir)
@@ -126,6 +134,7 @@ def main() -> None:
 
     needs_example = any(get_variant_config(variant_id).use_example_pair for variant_id in variant_ids)
     if needs_example:
+        example_rgb, example_metallic = resolve_default_example_pair(args)
         ensure_example_pair(example_rgb, example_metallic)
 
     example_rgb_hash = file_sha256(example_rgb) if example_rgb else ""
